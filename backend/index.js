@@ -88,7 +88,7 @@ async function start() {
     startScheduler();
 
   } catch (err) {
-    console.error('❌ Failed to start server:', err.message);
+    console.error('❌ Failed to start server:', err);
     console.error('\n💡 Checklist:');
     console.error('   1. Is MySQL running?');
     console.error('   2. Did you edit backend/.env with your credentials?');
