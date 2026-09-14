@@ -9,6 +9,7 @@
     "migrate": "node backend/db/migrate.js",
     "seed": "node backend/db/seed.js && node backend/db/seed-demo-accounts.js && node backend/db/seed-records.js",
     "seed:records": "node backend/db/seed-records.js",
+    "seed:comprehensive": "node backend/db/seed-comprehensive.js",
     "backup": "node -e \"require('./backend/db/backup').manualBackup('cli').then(r=>console.log(r))\""
   },
   "dependencies": {

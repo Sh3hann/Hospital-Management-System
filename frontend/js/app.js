@@ -56,7 +56,7 @@ const App = {
 
       <div class="portal-header">
         <div class="portal-logo-wrap">
-          <div class="portal-logo-icon">+</div>
+          <div class="portal-logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
           <div>
             <div class="portal-logo-title">MediCare Hospital</div>
             <div class="portal-logo-sub">Enterprise Healthcare Management System</div>
@@ -205,7 +205,7 @@ const App = {
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
           <div class="sidebar-logo" style="background:${portal.gradient}">
-            <span class="sidebar-plus">+</span>
+            <svg class="sidebar-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
           </div>
           <div class="sidebar-brand">
             <span class="brand-name">MediCare Hospital</span>

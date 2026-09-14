@@ -9,7 +9,7 @@ Pages.billing = async function(page = 1) {
 
     // Revenue summary
     const pending = bills.filter(b => b.status === 'pending' || b.status === 'partial');
-    const pendingAmount = pending.reduce((s, b) => s + b.total - (b.paid_amount || 0), 0);
+    const pendingAmount = pending.reduce((s, b) => s + (parseFloat(b.total) || 0) - (parseFloat(b.paid_amount) || 0), 0);
 
     content.innerHTML = `
     <div class="page-header">
@@ -56,8 +56,9 @@ Pages.billing = async function(page = 1) {
 };
 
 function renderBillRow(b) {
+  const total = parseFloat(b.total) || 0;
   const paid = parseFloat(b.paid_amount) || 0;
-  const balance = b.total - paid;
+  const balance = Math.max(0, total - paid);
   return `
   <tr>
     <td>${formatDate(b.created_at)}</td>
@@ -92,8 +93,9 @@ async function viewBill(id) {
     const b = await api.get(`/billing/${id}`);
     let items = [];
     try { items = typeof b.items === 'string' ? JSON.parse(b.items) : (b.items || []); } catch(e) {}
-    const paid = b.payments?.reduce((s, p) => s + p.amount, 0) || 0;
-    const balance = b.total - paid;
+    const total = parseFloat(b.total) || 0;
+    const paid = b.payments?.reduce((s, p) => s + (parseFloat(p.amount) || 0), 0) || 0;
+    const balance = Math.max(0, total - paid);
 
     const body = `
     <div id="bill-print-area">
@@ -185,15 +187,15 @@ async function openCreateBill() {
 }
 
 function buildBillItemRow(idx) {
-  return `<div id="bill-item-${idx}" style="display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:end">
-    <div class="form-group" style="margin:0"><label class="form-label">Description</label><input class="form-input" name="item_desc_${idx}" placeholder="e.g. Consultation" required /></div>
+  return `<div id="bill-item-${idx}" class="bill-item-row" style="display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:end">
+    <div class="form-group" style="margin:0"><label class="form-label">Description</label><input class="form-input item-desc" name="item_desc_${idx}" placeholder="e.g. Consultation" required /></div>
     <div class="form-group" style="margin:0"><label class="form-label">Type</label>
-      <select class="form-select" name="item_type_${idx}">
+      <select class="form-select item-type" name="item_type_${idx}">
         <option value="consultation">Consultation</option><option value="lab">Lab</option>
         <option value="pharmacy">Pharmacy</option><option value="admission">Admission</option><option value="other">Other</option>
       </select>
     </div>
-    <div class="form-group" style="margin:0"><label class="form-label">Amount (LKR)</label><input class="form-input" type="number" name="item_amount_${idx}" min="0" step="0.01" value="0" required /></div>
+    <div class="form-group" style="margin:0"><label class="form-label">Amount (LKR)</label><input class="form-input item-amount" type="number" name="item_amount_${idx}" min="0" step="0.01" value="0" required /></div>
     <button type="button" class="btn btn-danger btn-icon" style="margin-top:20px" onclick="document.getElementById('bill-item-${idx}').remove()">✕</button>
   </div>`;
 }
@@ -212,17 +214,28 @@ async function submitBillForm() {
   const fd = new FormData(form);
   const entries = Object.fromEntries(fd.entries());
 
+  // Collect items directly from active DOM rows so deleted/non-contiguous rows don't break collection
+  const itemRows = document.querySelectorAll('#bill-items .bill-item-row');
   const items = [];
-  let i = 0;
-  while (entries[`item_desc_${i}`] !== undefined) {
-    if (entries[`item_desc_${i}`]) {
-      items.push({ description: entries[`item_desc_${i}`], type: entries[`item_type_${i}`], amount: parseFloat(entries[`item_amount_${i}`]) || 0 });
+  itemRows.forEach(row => {
+    const desc = row.querySelector('.item-desc')?.value?.trim();
+    const type = row.querySelector('.item-type')?.value || 'consultation';
+    const amount = parseFloat(row.querySelector('.item-amount')?.value) || 0;
+    if (desc) {
+      items.push({ description: desc, type, amount });
     }
-    i++;
-  }
+  });
+
   if (!items.length) { toast('warning', 'Add at least one item'); return; }
 
-  const data = { patient_id: entries.patient_id, items, discount: parseFloat(entries.discount)||0, tax: parseFloat(entries.tax)||0, notes: entries.notes };
+  const data = {
+    patient_id: entries.patient_id,
+    items,
+    discount: parseFloat(entries.discount) || 0,
+    tax: parseFloat(entries.tax) || 0,
+    notes: entries.notes || ''
+  };
+
   try {
     await api.post('/billing', data);
     toast('success', 'Bill created successfully');
