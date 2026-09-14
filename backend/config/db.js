@@ -26,6 +26,11 @@ async function initDB() {
     queueLimit:         0,
     timezone:           'Z',           // Store/retrieve as UTC
     multipleStatements: false,
+
+    ssl: {
+  rejectUnauthorized: false
+},
+
   });
 
   // Test the connection
