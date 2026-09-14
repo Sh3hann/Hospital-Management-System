@@ -1,5 +1,5 @@
 // ─── API WRAPPER ─────────────────────────────────────
-const API_BASE = '/api';
+const API_BASE = 'https://hospital-management-system-0vdd.onrender.com/api';
 
 const api = {
   _token: null,
