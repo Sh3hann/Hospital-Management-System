@@ -46,7 +46,9 @@ router.post('/', authenticateToken, requireRole('admin'), async (req, res) => {
     const existing = await queryOne('SELECT id FROM users WHERE username = ?', [username]);
     if (existing) return res.status(400).json({ error: 'Username already exists' });
 
-    const roleObj = await queryOne('SELECT id FROM roles WHERE name = ?', [role]);
+    let roleName = role;
+    if (roleName === 'lab_staff') roleName = 'lab_tech';
+    const roleObj = await queryOne('SELECT id FROM roles WHERE name = ?', [roleName]);
     if (!roleObj)  return res.status(400).json({ error: `Invalid role: ${role}` });
 
     const hash   = bcrypt.hashSync(password, 10);
@@ -90,7 +92,9 @@ router.put('/:id', authenticateToken, requireRole('admin'), async (req, res) => 
 
     let roleId = user.role_id;
     if (role) {
-      const roleObj = await queryOne('SELECT id FROM roles WHERE name = ?', [role]);
+      let roleName = role;
+      if (roleName === 'lab_staff') roleName = 'lab_tech';
+      const roleObj = await queryOne('SELECT id FROM roles WHERE name = ?', [roleName]);
       if (roleObj) roleId = roleObj.id;
     }
 

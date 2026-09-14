@@ -32,7 +32,7 @@ const RBAC = {
       color: '#0284c7',
       gradient: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)',
       description: 'Reception, Laboratory, Pharmacy & Financial billing management.',
-      roles: ['receptionist', 'lab_staff', 'pharmacist', 'accountant'],
+      roles: ['receptionist', 'lab_staff', 'lab_tech', 'pharmacist', 'accountant'],
       badge: 'SUPPORT STAFF',
       icon: 'briefcase'
     },
@@ -103,6 +103,14 @@ const RBAC = {
         { id: 'appointments', label: 'Schedule Appointment', icon: 'calendar' },
         { id: 'doctors', label: 'Doctor Schedules', icon: 'activity' },
         { id: 'billing', label: 'Billing & Counter', icon: 'credit-card' }
+      ]}
+    ],
+
+    lab_tech: [
+      { group: 'Overview', items: [{ id: 'dashboard', label: 'Lab Dashboard', icon: 'grid' }] },
+      { group: 'Laboratory', items: [
+        { id: 'lab', label: 'Test Requests & Results', icon: 'flask' },
+        { id: 'patients', label: 'Patient Search', icon: 'users' }
       ]}
     ],
 

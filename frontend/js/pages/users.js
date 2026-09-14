@@ -30,9 +30,10 @@ Pages.users = async function() {
           <option value="doctor">Doctor</option>
           <option value="nurse">Nurse</option>
           <option value="receptionist">Receptionist</option>
-          <option value="lab_staff">Lab Technician</option>
+          <option value="lab_tech">Lab Technician</option>
           <option value="pharmacist">Pharmacist</option>
           <option value="accountant">Accountant</option>
+          <option value="patient">Patient</option>
         </select>
       </div>
 
@@ -98,7 +99,7 @@ function filterUsers(search = '') {
 
   const filtered = (window._allUsers || []).filter(u => {
     const matchSearch = !s || u.full_name.toLowerCase().includes(s) || u.username.toLowerCase().includes(s) || u.role.toLowerCase().includes(s);
-    const matchRole = !roleFilter || u.role === roleFilter;
+    const matchRole = !roleFilter || u.role === roleFilter || (roleFilter === 'lab_tech' && u.role === 'lab_staff') || (roleFilter === 'lab_staff' && u.role === 'lab_tech');
     return matchSearch && matchRole;
   });
 
@@ -124,9 +125,10 @@ function openAddUser() {
           <option value="doctor">Doctor</option>
           <option value="nurse">Nurse</option>
           <option value="receptionist">Receptionist</option>
-          <option value="lab_staff">Lab Technician</option>
+          <option value="lab_tech">Lab Technician</option>
           <option value="pharmacist">Pharmacist</option>
           <option value="accountant">Accountant</option>
+          <option value="patient">Patient</option>
         </select>
       </div>
     </div>
@@ -157,9 +159,10 @@ async function openEditUser(id) {
             <option value="doctor" ${user.role==='doctor'?'selected':''}>Doctor</option>
             <option value="nurse" ${user.role==='nurse'?'selected':''}>Nurse</option>
             <option value="receptionist" ${user.role==='receptionist'?'selected':''}>Receptionist</option>
-            <option value="lab_staff" ${user.role==='lab_staff'?'selected':''}>Lab Technician</option>
+            <option value="lab_tech" ${user.role==='lab_tech'||user.role==='lab_staff'?'selected':''}>Lab Technician</option>
             <option value="pharmacist" ${user.role==='pharmacist'?'selected':''}>Pharmacist</option>
             <option value="accountant" ${user.role==='accountant'?'selected':''}>Accountant</option>
+            <option value="patient" ${user.role==='patient'?'selected':''}>Patient</option>
           </select>
         </div>
       </div>

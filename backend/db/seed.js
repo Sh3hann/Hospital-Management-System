@@ -23,6 +23,7 @@ async function seed() {
     { name: 'pharmacist',  permissions: JSON.stringify(['pharmacy:*','patients:read']) },
     { name: 'lab_tech',    permissions: JSON.stringify(['lab:*','patients:read']) },
     { name: 'accountant',  permissions: JSON.stringify(['billing:*','reports:read']) },
+    { name: 'patient',     permissions: JSON.stringify(['patients:read','appointments:read','appointments:create','emr:read','lab:read','billing:read']) },
   ];
 
   for (const role of roles) {

@@ -128,6 +128,28 @@ const App = {
 
         <div class="divider"></div>
 
+        <div class="demo-portal-hint" style="background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:18px;font-size:12px">
+          <div style="font-weight:600;margin-bottom:8px;color:var(--text-secondary);display:flex;align-items:center;gap:6px">
+            <span>🔑 Demo Accounts for ${portal.name} (Click to Fill):</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            ${portalId === 'admin' ? `
+              <button type="button" class="btn btn-xs btn-outline" onclick="App.fillLogin('admin','Admin@123')">admin (Kavindu)</button>
+            ` : portalId === 'clinical' ? `
+              <button type="button" class="btn btn-xs btn-outline" onclick="App.fillLogin('dr.silva','Doctor@123')">dr.silva (Doctor)</button>
+              <button type="button" class="btn btn-xs btn-outline" onclick="App.fillLogin('nurse.kumari','Nurse@123')">nurse.kumari (Nurse)</button>
+            ` : portalId === 'operations' ? `
+              <button type="button" class="btn btn-xs btn-outline" onclick="App.fillLogin('lab.saman','Lab@123')">lab.saman (Lab Tech)</button>
+              <button type="button" class="btn btn-xs btn-outline" onclick="App.fillLogin('reception.imalka','Staff@123')">reception.imalka</button>
+              <button type="button" class="btn btn-xs btn-outline" onclick="App.fillLogin('pharma.ruwan','Pharma@123')">pharma.ruwan</button>
+              <button type="button" class="btn btn-xs btn-outline" onclick="App.fillLogin('accounts.dinesh','Accounts@123')">accounts.dinesh</button>
+            ` : portalId === 'patient' ? `
+              <button type="button" class="btn btn-xs btn-outline" onclick="App.fillLogin('patient.kasun','Patient@123')">patient.kasun (Kasun Perera)</button>
+              <button type="button" class="btn btn-xs btn-outline" onclick="App.fillLogin('patient','Patient@123')">patient (Quick Login)</button>
+            ` : ''}
+          </div>
+        </div>
+
         <form id="login-form" onsubmit="App.handleLogin(event, '${portalId}')">
           <div class="form-group">
             <label class="form-label" for="login-username">Username</label>
@@ -154,6 +176,17 @@ const App = {
         </form>
       </div>
     </div>`;
+  },
+
+  fillLogin(username, password) {
+    const u = document.getElementById('login-username');
+    const p = document.getElementById('login-password');
+    if (u && p) {
+      u.value = username;
+      p.value = password;
+      const btn = document.getElementById('login-btn');
+      if (btn) btn.focus();
+    }
   },
 
   async handleLogin(e, portalId) {

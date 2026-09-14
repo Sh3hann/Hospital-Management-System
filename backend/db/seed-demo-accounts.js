@@ -183,6 +183,22 @@ const DEMO_ACCOUNTS = [
     role:      'accountant',
     password:  'Accounts@123',
   },
+
+  // ── PATIENTS ──────────────────────────────────────────────────
+  {
+    username:  'patient.kasun',
+    full_name: 'Kasun Perera',
+    email:     'kasun.perera@medicore.lk',
+    role:      'patient',
+    password:  'Patient@123',
+  },
+  {
+    username:  'patient',
+    full_name: 'Kasun Perera (Patient)',
+    email:     'patient@medicore.lk',
+    role:      'patient',
+    password:  'Patient@123',
+  },
 ];
 
 // ── Department name → id lookup ──────────────────────────────
@@ -209,7 +225,14 @@ async function main() {
 
   for (const acc of DEMO_ACCOUNTS) {
     const hash    = bcrypt.hashSync(acc.password, 10);
-    const roleRow = await queryOne('SELECT id FROM roles WHERE name=?', [acc.role]);
+    let roleRow = await queryOne('SELECT id FROM roles WHERE name=?', [acc.role]);
+    if (!roleRow && acc.role === 'patient') {
+      const pResult = await run(
+        'INSERT INTO roles (name, permissions) VALUES (?, ?)',
+        ['patient', JSON.stringify(['patients:read','appointments:read','appointments:create','emr:read','lab:read','billing:read'])]
+      );
+      roleRow = { id: pResult.lastId };
+    }
     if (!roleRow) {
       console.log(`  ⚠️  Role not found: ${acc.role} — skipping ${acc.username}`);
       continue;
@@ -286,7 +309,7 @@ async function main() {
     if (!grouped[r.role]) grouped[r.role] = [];
     grouped[r.role].push(r);
   }
-  for (const role of ['admin','doctor','nurse','receptionist','pharmacist','lab_tech','accountant']) {
+  for (const role of ['admin','doctor','nurse','receptionist','pharmacist','lab_tech','accountant','patient']) {
     if (!grouped[role]) continue;
     for (const r of grouped[role]) {
       console.log(`${role.padEnd(14)} ${r.username.padEnd(26)} ${r.password.padEnd(14)} ${r.name}`);

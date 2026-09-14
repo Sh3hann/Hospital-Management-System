@@ -85,6 +85,7 @@ All accounts are created with real Sri Lankan names across all system roles:
 | **Lab Technician** | `lab.nishani` | `Lab@123` | Nishani Pathirana | Diagnostics Lab |
 | **Accountant** | `accounts.dinesh` | `Accounts@123` | Dinesh Madushanka | Billing & Cashier |
 | **Accountant** | `accounts.hiruni` | `Accounts@123` | Hiruni Jayasooriya | Financial Reports |
+| **Patient** | `patient.kasun` / `patient` | `Patient@123` | Kasun Perera | Patient Portal / Personal Health |
 
 ---
 

@@ -23,7 +23,7 @@ Pages.dashboard = async function() {
       roleDashboardHtml = renderNurseDashboard(stats, recent_appointments);
     } else if (role === 'receptionist') {
       roleDashboardHtml = renderReceptionistDashboard(stats, recent_appointments);
-    } else if (role === 'lab_staff') {
+    } else if (role === 'lab_staff' || role === 'lab_tech') {
       roleDashboardHtml = renderLabStaffDashboard(stats);
     } else if (role === 'pharmacist') {
       roleDashboardHtml = renderPharmacistDashboard(stats);
