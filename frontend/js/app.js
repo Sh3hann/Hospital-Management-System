@@ -201,6 +201,9 @@ const App = {
     const root = document.getElementById('app-root');
     root.innerHTML = `
     <div class="app">
+      <!-- MOBILE BACKDROP -->
+      <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="App.closeMobileSidebar()"></div>
+
       <!-- SIDEBAR -->
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -212,6 +215,7 @@ const App = {
             <span class="brand-tag" style="color:${portal.color}">${portal.name.split(' ')[0]}</span>
           </div>
           <button class="sidebar-toggle" id="sidebar-toggle" onclick="App.toggleSidebar()">☰</button>
+          <button class="sidebar-close-btn" id="sidebar-close-btn" onclick="App.closeMobileSidebar()">✕</button>
         </div>
 
         <nav class="sidebar-nav">
@@ -325,6 +329,8 @@ const App = {
       return;
     }
 
+    this.closeMobileSidebar();
+
     const hash = rawHash || 'dashboard';
     const role = this.user.role || 'admin';
 
@@ -435,7 +441,17 @@ const App = {
   },
 
   toggleSidebar() {
-    document.getElementById('sidebar')?.classList.toggle('collapsed');
+    if (window.innerWidth <= 768) {
+      document.getElementById('sidebar')?.classList.toggle('mobile-open');
+      document.getElementById('sidebar-backdrop')?.classList.toggle('active');
+    } else {
+      document.getElementById('sidebar')?.classList.toggle('collapsed');
+    }
+  },
+
+  closeMobileSidebar() {
+    document.getElementById('sidebar')?.classList.remove('mobile-open');
+    document.getElementById('sidebar-backdrop')?.classList.remove('active');
   },
 
   updateClock() {

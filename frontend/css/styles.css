@@ -705,4 +705,409 @@ td { padding: 10px 12px; font-size: 13px; vertical-align: middle; }
   stroke-width: 1.8px;
 }
 
+/* ═══════════════════════════════════════════════════════
+   COMPREHENSIVE MOBILE & RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════ */
+
+/* Mobile Sidebar Backdrop */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 199;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.sidebar-backdrop.active {
+  display: block;
+  opacity: 1;
+}
+
+.sidebar-close-btn {
+  display: none;
+  color: var(--text-muted);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  background: var(--surface-2);
+  cursor: pointer;
+  border: 1px solid var(--border);
+}
+.sidebar-close-btn:hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+/* Tablet & Smaller Desktop Screens (<= 1024px) */
+@media (max-width: 1024px) {
+  .portal-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px;
+  }
+}
+
+/* Mobile Screens (<= 768px) */
+@media (max-width: 768px) {
+  /* Prevent horizontal scrolling on body */
+  body, html {
+    overflow-x: hidden;
+  }
+
+  /* Portal Selector & Login */
+  .portal-screen {
+    padding: 20px 16px 36px;
+  }
+  .portal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .portal-logo-title {
+    font-size: 19px;
+  }
+  .portal-title-area {
+    margin-bottom: 24px;
+  }
+  .portal-title-area h1 {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+  .portal-title-area p {
+    font-size: 13.5px;
+  }
+  .portal-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+  .portal-card {
+    padding: 20px 16px;
+    border-radius: var(--radius-lg);
+  }
+  .portal-card-badge {
+    top: 14px;
+    right: 14px;
+    font-size: 9px;
+  }
+  .portal-card-icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 14px;
+  }
+
+  /* Portal Login Card */
+  .portal-login-screen {
+    padding: 16px 12px;
+    align-items: center;
+  }
+  .portal-login-card {
+    padding: 24px 18px;
+    max-width: 100%;
+    border-radius: var(--radius-lg);
+  }
+  .portal-login-header h2 {
+    font-size: 18px;
+  }
+
+  /* App Shell & Sidebar Drawer */
+  .app {
+    position: relative;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .sidebar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 275px !important;
+    max-width: 85vw;
+    height: 100vh !important;
+    height: 100dvh !important;
+    z-index: 200 !important;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none;
+  }
+  .sidebar.mobile-open {
+    transform: translateX(0) !important;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.35) !important;
+  }
+  /* Show close button, hide desktop collapse toggle on mobile */
+  .sidebar-toggle {
+    display: none !important;
+  }
+  .sidebar-close-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+  /* When collapsed class was toggled, don't shrink sidebar on mobile */
+  .sidebar.collapsed {
+    width: 275px !important;
+  }
+  .sidebar.collapsed .sidebar-brand,
+  .sidebar.collapsed .nav-label,
+  .sidebar.collapsed .nav-group-label,
+  .sidebar.collapsed .user-details {
+    display: block !important;
+  }
+
+  /* Topbar */
+  .topbar {
+    padding: 0 12px;
+    height: 56px;
+  }
+  .topbar-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: var(--surface-2);
+    font-size: 20px;
+    color: var(--text);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .topbar-left {
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+  }
+  .topbar-breadcrumb {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .topbar-time {
+    display: none !important;
+  }
+  .topbar-right {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .topbar-right button.btn-ghost {
+    padding: 5px 8px;
+    font-size: 11.5px;
+  }
+  .topbar-user {
+    gap: 4px;
+  }
+  .topbar-user span.badge,
+  #topbar-username {
+    display: none !important;
+  }
+
+  /* Page Content Container */
+  .page-content {
+    padding: 14px 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Page Headers */
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .page-header-left h2 {
+    font-size: 18px;
+  }
+  .page-header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .page-header-actions .btn {
+    flex: 1 1 auto;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Cards & Layout */
+  .card {
+    padding: 14px 12px;
+    border-radius: var(--radius);
+  }
+  .card-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Override all inline grid-template-columns on stats-grid */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    padding: 12px 10px;
+    gap: 10px;
+  }
+  .stat-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+  .stat-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .stat-value {
+    font-size: 18px;
+  }
+  .stat-label {
+    font-size: 11px;
+  }
+
+  /* Two column layout collapse */
+  .grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  /* Forms & Inputs */
+  .form-row,
+  .form-row-3 {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+  .detail-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+  .vitals-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px;
+  }
+  .bill-item-row {
+    grid-template-columns: 1fr 1fr !important;
+    background: var(--surface-2);
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .bill-item-row > :first-child {
+    grid-column: span 2;
+  }
+
+  /* Filter bar full-width stacking */
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .filter-bar > * {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .search-input-wrap {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Tables horizontal scroll */
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-sm);
+  }
+  table {
+    min-width: 540px;
+  }
+  td, thead th {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  /* Quick Actions (2 Columns) */
+  .quick-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .quick-action {
+    min-width: 0;
+    padding: 12px 8px;
+  }
+  .quick-action-label {
+    font-size: 11px;
+  }
+
+  /* Modals as mobile bottom-sheets */
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .modal {
+    max-width: 100% !important;
+    max-height: 90vh !important;
+    border-radius: 20px 20px 0 0 !important;
+    border-bottom: none !important;
+  }
+  .modal-body {
+    padding: 16px 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .modal-footer {
+    padding: 12px 14px;
+    flex-wrap: wrap;
+  }
+  .modal-footer .btn {
+    flex: 1;
+  }
+
+  /* Calendar */
+  .calendar-grid {
+    gap: 3px;
+  }
+  .calendar-header {
+    font-size: 9.5px;
+    padding: 3px 0;
+  }
+  .calendar-day {
+    font-size: 11px;
+    border-radius: 6px;
+  }
+
+  /* Donut chart wrap */
+  .donut-wrap {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Toast alerts */
+  .toast-container {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+  }
+  .toast {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* Small Mobile Screens (<= 480px) */
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+  .vitals-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 
