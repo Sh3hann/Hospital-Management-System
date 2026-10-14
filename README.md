@@ -1,90 +1,118 @@
 <div align="center">
 
-# 🏥 MediCore Hospital Management System
-### Enterprise Healthcare Operations & Patient Electronic Health Records (EHR) Portal
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=16,23,30&height=200&section=header&text=🏥%20MediCore%20HMS&fontSize=46&fontAlignY=36&desc=Enterprise%20Healthcare%20Operations%20%7C%20EHR%20%7C%20Clinical%20Portal&descAlignY=58&descSize=16&fontColor=ffffff" width="100%" alt="MediCore HMS Header" />
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://hospital-management-system-green-eight.vercel.app)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-Backend-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+  <p align="center">
+    <b>A high-performance, full-stack Hospital Management & Electronic Health Records (EHR) platform built for clinical efficiency, patient care, and automated administration.</b>
+  </p>
 
-<p align="center">
-  <a href="https://hospital-management-system-green-eight.vercel.app"><b>🚀 Visit Live Platform</b></a> •
-  <a href="#-project-structure"><b>Architecture</b></a> •
-  <a href="#-demo-accounts-all-verified--working"><b>Demo Logins</b></a> •
-  <a href="#️-quick-start"><b>Local Setup</b></a>
-</p>
+  <p align="center">
+    <a href="https://hospital-management-system-green-eight.vercel.app" target="_blank">
+      <img src="https://img.shields.io/badge/🌐_Live_Demo-Launch_Portal-0077B5?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+    </a>
+    &nbsp;
+    <a href="https://github.com/Sh3hann/Hospital-Management-System">
+      <img src="https://img.shields.io/badge/💻_Source_Code-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Source Code" />
+    </a>
+  </p>
+
+  <p align="center">
+    <img src="https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js" />
+    <img src="https://img.shields.io/badge/Express.js-Backend-000000?style=flat-square&logo=express&logoColor=white" alt="Express" />
+    <img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=flat-square&logo=mysql&logoColor=white" alt="MySQL" />
+    <img src="https://img.shields.io/badge/JWT-RBAC_Security-000000?style=flat-square&logo=jsonwebtokens&logoColor=white" alt="JWT" />
+    <img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square" alt="License" />
+  </p>
 
 </div>
 
 ---
 
-Full-stack, production-grade Hospital Management System built with **Node.js**, **Express**, and **MySQL**. Provides comprehensive medical workflows including OPD/IPD admissions, doctor scheduling, electronic medical records, laboratory testing, pharmacy dispensary, billing, audit logging, and automated database backups.
+## ⚡ Core Operational Modules
+
+<div align="center">
+
+| Module | Core Functionality | Impact |
+|:---|:---|:---|
+| 🏥 **Patient & EHR Engine** | Complete OPD/IPD registration, medical history, vital signs tracking, and digital prescription archives. | Eliminates paper records and streamlines patient care history. |
+| 👨‍⚕️ **Doctor & Consultation Desk** | Specialty-based appointment scheduling (Cardiology, Neurology, Pediatrics, etc.) with real-time slot management. | Prevents scheduling overlaps and optimizes consultation queues. |
+| 🧪 **Pathology & Lab Diagnostics** | Diagnostic test requisition, specimen tracking, result entry, and automated lab report generation. | Accelerates turnaround time for critical diagnostic evaluations. |
+| 💊 **Pharmacy & Inventory** | Real-time drug inventory tracking, automated prescription dispensing, and low-stock threshold alerts. | Prevents medication stockouts and ensures accurate prescription fulfillment. |
+| 💳 **Billing & Automated Invoicing** | Comprehensive financial desk calculating consultation, pharmacy, and laboratory charges with receipt generation. | Provides instant reconciliation and transparent breakdown of charges. |
+| 🛡️ **Audit Trail & System Recovery** | Full compliance audit logging for every medical transaction with automated database backup routines. | Ensures medical regulatory compliance and high disaster recovery readiness. |
+
+</div>
 
 ---
 
-## 📁 Project Structure
+## 🏗️ System Architecture
+
+MediCore is engineered using a decoupled Single Page Application (SPA) frontend and a modular REST API backend:
+
+`mermaid
+graph LR
+    subgraph Client ["Frontend Client"]
+        UI["Modern SPA Interface<br/>(HTML5 / CSS3 / Vanilla JS)"]
+        RBAC_UI["Role-Based View Engine"]
+        API_CLIENT["REST API Client"]
+    end
+
+    subgraph Server ["Node.js Express Backend"]
+        ROUTER["API Router"]
+        AUTH["JWT & RBAC Middleware"]
+        AUDIT["Compliance Audit Engine"]
+        SERVICES["Clinical Services Layer"]
+    end
+
+    subgraph DataStore ["Persistence Layer"]
+        DB[("MySQL Relational DB")]
+        BACKUP["Automated Backup Engine"]
+    end
+
+    UI --> RBAC_UI --> API_CLIENT
+    API_CLIENT --> ROUTER
+    ROUTER --> AUTH --> AUDIT --> SERVICES
+    SERVICES --> DB
+    DB --> BACKUP
+`
+
+<details>
+<summary><b>📂 View Modular Codebase Organization</b></summary>
 
 `
-hms/
-├── frontend/                  # Static Single Page App (HTML5 / Modern CSS / Vanilla JS)
-│   ├── index.html
-│   ├── css/styles.css
-│   └── js/
-│       ├── api.js             # API client & fetch wrapper
-│       ├── app.js             # SPA router & shell
-│       ├── rbac.js            # Role-based UI rendering
-│       ├── utils.js
-│       └── pages/             # Page controllers (patients, doctors, billing, etc.)
-│
-├── backend/                   # Node.js REST API server
-│   ├── .env                   # Database credentials & secrets
-│   ├── .env.example           # Configuration template
-│   ├── index.js               # Server entry point
-│   ├── config/
-│   │   └── db.js              # MySQL connection pool (mysql2/promise)
-│   ├── middleware/
-│   │   ├── auth.js            # JWT authentication & RBAC middleware
-│   │   └── audit.js           # Comprehensive compliance audit trail
-│   ├── routes/                # REST API endpoints
-│   │   ├── auth.js
-│   │   ├── patients.js
-│   │   ├── doctors.js
-│   │   ├── appointments.js
-│   │   ├── medical-records.js
-│   │   ├── admissions.js
-│   │   ├── lab.js
-│   │   ├── pharmacy.js
-│   │   ├── billing.js
-│   │   ├── staff.js
-│   │   ├── users.js
-│   │   ├── reports.js
-│   │   └── backup.js          # Backup & Recovery REST API
-│   ├── db/
-│   │   ├── schema.sql         # Relational database schema
-│   │   ├── migrate.js         # Automated schema migration runner
-│   │   ├── seed.js            # Database seeding utility
-│   │   ├── seed-demo-accounts.js # Comprehensive demo accounts
-│   │   └── backup.js          # Automated database backup engine
-│   └── utils/
-│       └── scheduler.js       # Automated cron backup scheduler
-│
-├── backups/                   # System backups
-│   ├── daily/
-│   ├── weekly/
-│   └── manual/
-│
-└── package.json
+Hospital-Management-System/
+├── frontend/                  # Responsive Single Page Application
+│   ├── js/pages/              # Modular view controllers (patients, doctors, billing)
+│   ├── js/rbac.js             # Dynamic role-based interface gating
+│   └── js/api.js              # Centralized authenticated API gateway
+├── backend/                   # RESTful API Micro-Architecture
+│   ├── routes/                # Domain routers (auth, medical-records, lab, pharmacy, billing)
+│   ├── middleware/            # JWT verification & audit trail interceptors
+│   ├── config/db.js           # MySQL connection pooling (mysql2/promise)
+│   └── db/                    # Schema migrations, seeders & backup schedulers
+└── backups/                   # Automated scheduled database snapshots
 `
+
+</details>
 
 ---
 
-## 🔑 Demo Accounts (All Verified & Working)
+## 🔑 Quick Demo Access
 
-All accounts are created with real Sri Lankan names across all system roles:
+Test the live platform immediately using any of the pre-configured accounts:
 
-| Role | Username | Password | Full Name | Department / Notes |
+| Role | Username | Password | Access Level |
+|:---|:---|:---|:---|
+| **System Admin** | dmin | Admin@123 | Full administrative control, system logs & backups |
+| **Chief Doctor** | dr.silva | Doctor@123 | Clinical consults, prescriptions & medical records |
+| **Nurse Lead** | 
+urse.kumari | Nurse@123 | Inpatient wards, patient vitals & admissions |
+| **Patient** | patient | Patient@123 | Personal health portal, appointments & billing |
+
+<details>
+<summary><b>📋 View Full Roster (20 Verified Multi-Department Accounts)</b></summary>
+
+| Role | Username | Password | Full Name | Department / Focus |
 |---|---|---|---|---|
 | **Administrator** | dmin | Admin@123 | Kavindu Perera | System Admin / Full Access |
 | **Doctor** | dr.silva | Doctor@123 | Dr. Nuwan Silva | Cardiology |
@@ -100,44 +128,63 @@ urse.kumari | Nurse@123 | Kumari Rathnayake | Inpatient Ward |
 urse.sewwandi | Nurse@123 | Sewwandi Gunawardena | Emergency Ward |
 | **Nurse** | 
 urse.priyanka | Nurse@123 | Priyanka Herath | General Ward |
-| **Receptionist** | eception.imalka | Staff@123 | Imalka Senanayake | Front Desk / Appointments |
+| **Receptionist** | eception.imalka | Staff@123 | Imalka Senanayake | Front Desk & Appointments |
 | **Receptionist** | eception.nadeesha | Staff@123 | Nadeesha Wijesinghe | Patient Registration |
 | **Pharmacist** | pharma.ruwan | Pharma@123 | Ruwan Karunaratne | Pharmacy Dispenser |
 | **Pharmacist** | pharma.sanduni | Pharma@123 | Sanduni Amarasinghe | Pharmacy Stock Lead |
-| **Lab Technician** | lab.saman | Lab@123 | Saman Kodithuwakku | Pathology / Blood Lab |
+| **Lab Technician** | lab.saman | Lab@123 | Saman Kodithuwakku | Pathology & Blood Lab |
 | **Lab Technician** | lab.nishani | Lab@123 | Nishani Pathirana | Diagnostics Lab |
 | **Accountant** | ccounts.dinesh | Accounts@123 | Dinesh Madushanka | Billing & Cashier |
 | **Accountant** | ccounts.hiruni | Accounts@123 | Hiruni Jayasooriya | Financial Reports |
-| **Patient** | patient.kasun / patient | Patient@123 | Kasun Perera | Patient Portal / Personal Health |
+| **Patient** | patient.kasun | Patient@123 | Kasun Perera | Personal Health Records |
+
+</details>
 
 ---
 
-## ⚙️ Quick Start
+## 🚀 Local Development Setup
 
-`powershell
-# 1. Run migrations & seed demo accounts
+### 1. Clone & Install
+`ash
+git clone https://github.com/Sh3hann/Hospital-Management-System.git
+cd Hospital-Management-System
+npm install
+`
+
+### 2. Configure Environment
+Create ackend/.env with your database credentials:
+`env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=hms_db
+JWT_SECRET=your_jwt_secret_key
+PORT=3000
+`
+
+### 3. Run Database Migrations & Seeds
+`ash
 npm run migrate
 npm run seed
 node backend/db/seed-demo-accounts.js
-
-# 2. Start server
-npm run dev
-
-# 3. Access web client
-# http://localhost:3000
 `
 
----
-
-## 👤 Author
-
-**Akil Shehan**
-- Live Demo: [hospital-management-system-green-eight.vercel.app](https://hospital-management-system-green-eight.vercel.app)
-- Portfolio: [itzshehan.xyz](https://itzshehan.xyz/)
-- GitHub: [@Sh3hann](https://github.com/Sh3hann)
-- LinkedIn: [Akil Shehan](https://www.linkedin.com/in/akil-shehan-b808b340b)
+### 4. Start the Application
+`ash
+npm run dev
+`
+Open **http://localhost:3000** in your browser.
 
 ---
 
-## 📄 License
-This project is licensed under the MIT License.
+<div align="center">
+
+### 👨‍💻 Developed with Precision by [Akil Shehan](https://github.com/Sh3hann)
+
+[![Website](https://img.shields.io/badge/Portfolio-itzshehan.xyz-f59e0b?style=flat-square&logo=google-chrome&logoColor=white)](https://itzshehan.xyz/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Akil_Shehan-0077b5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akil-shehan-b808b340b)
+[![GitHub](https://img.shields.io/badge/GitHub-@Sh3hann-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Sh3hann)
+
+<sub>© 2026 MediCore HMS. Released under the MIT License.</sub>
+
+</div>
